@@ -26,12 +26,12 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-maven-
 
       - name: Install dependencies and run tests
-        run: mvn clean install
+        run: mvn clean install -e -X  # Added -e for errors and -X for debug output
 
       - name: Generate Extent Report
         run: mvn test
